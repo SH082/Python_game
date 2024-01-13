@@ -136,9 +136,11 @@ while running:
         #스테이지에 튕겨서 올라가는 처리
         if ball_pos_y >=screen_height - stage_height - ball_height:
             ball_val["to_y"] = ball_val["init_spd_y"]
-        else: 
-            ball_val["to_y"]+0.5
+        else: #그 외의 모든 경우에는 속도를 증가
+            ball_val["to_y"]+=0.5
 
+        ball_val["pos_x"] += ball_val["to_x"]
+        ball_val["pos_y"] += ball_val["to_y"]
     # 4. 출돌 처리
 
     # 5. 화면에 그리기
@@ -147,6 +149,12 @@ while running:
     for weapon_x_pos, weapon_y_pos in weapons:
         screen.blit(weapon,(weapon_x_pos,weapon_y_pos)) #캐릭터 그리기
     
+    for idx, val in enumerate(balls):
+        ball_pos_x = val["pos_x"]
+        ball_pos_y = val["pos_y"]
+        ball_img_idx = val["img_idx"]
+        screen.blit(ball_images[ball_img_idx],(ball_pos_x,ball_pos_y))
+
     screen.blit(stage,(0,screen_height-stage_height)) #스테이지 그리기
     screen.blit(character,(character_x_pos,character_y_pos)) #캐릭터 그리기
     
